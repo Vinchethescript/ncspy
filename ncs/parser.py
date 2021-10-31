@@ -57,7 +57,7 @@ def parse_song(html, searched=None) -> dict:
 
     datas = pagetitle.split(" - ")
     artists_ = datas[0].strip("( )").replace("ft. ", "", 1).split(" & ")
-    for artist in artists_: 
+    for artist in artists_:
         artists.add(artist)
 
     artists = [artists, feats]

@@ -4,11 +4,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pyncs",
+    name="ncspy",
     version="0.1",
     author="Vincy.zsh",
     author_email="Vincysuper07@gmail.com",
-    description='A NoCopyrightSounds "API" wrapper written with asyncio..',
+    description='A NoCopyrightSounds "API" wrapper written with asyncio.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Vincydotzsh/pyncs",
@@ -17,6 +17,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=["aiohttp", "beautifulsoup4"],
-    packages=["ncs"],
+    packages=setuptools.find_packages(where="ncs"),
     python_requires=">=3.7",
 )
