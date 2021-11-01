@@ -113,7 +113,9 @@ class Client:
         items = []
         if get:
             for item in data["items"]:
-                items.append(await self.get_song(item["id"], close=False))
+                items.append((await self.get_song(item["id"], close=False)).data)
+        
+            data["items"] = items
 
         if self.created_session and close:
             await self.session.close()

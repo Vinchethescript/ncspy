@@ -60,7 +60,8 @@ def parse_song(html, searched=None) -> dict:
     for artist in artists_:
         artists.add(artist)
 
-    artists = [artists, feats]
+    feats = list(feats)
+    artists = list(artists) + feats
     for ft in fts:
         if isinstance(ft, tuple):
             ft = ft[0]
