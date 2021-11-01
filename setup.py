@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ncspy",
-    version="0.2",
+    version="0.2.1",
     author="Vincy.zsh",
     author_email="Vincysuper07@gmail.com",
     description='A NoCopyrightSounds "API" wrapper written with asyncio.',
@@ -16,7 +16,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    install_requires=["aiohttp", "beautifulsoup4"],
+    install_requires=["aiohttp", "beautifulsoup4", "slimit"],
     packages=["ncs"],
     python_requires=">=3.7",
 )
