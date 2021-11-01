@@ -17,6 +17,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=["aiohttp", "beautifulsoup4"],
-    packages=setuptools.find_packages(where="ncs"),
+    packages=["ncs"],
     python_requires=">=3.7",
 )
