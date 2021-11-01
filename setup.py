@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ncspy",
-    version="0.1",
+    version="0.2",
     author="Vincy.zsh",
     author_email="Vincysuper07@gmail.com",
     description='A NoCopyrightSounds "API" wrapper written with asyncio.',
