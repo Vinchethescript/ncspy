@@ -82,7 +82,14 @@ def parse_song(html, searched=None) -> dict:
     if not searched:
         return ret
 
-    ars = list(set(searched["artists"] + ret["artists"]))
+    ars_ = list(set(searched["artists"] + ret["artists"]))
+    lows = []
+    ars = []
+    for ar in ars_:
+        if not ar.lower() in lows:
+            lows.append(ar.lower())
+            ars.append(ar)
+    print(ars)
     searched.update(ret)
     searched["artists"] = ars
     return searched
@@ -104,9 +111,10 @@ def parse_search_results(html, wanted_artists=[]) -> dict:
         id = datas.a["href"].strip("/")
         title = datas.a.p.text
         artists = datas.span.text.split(", ")
+        artists_ = datas.span.text.lower().split(", ")
         versions = res.find_all("td")[6].text.lower().split(", ")
         date = res.find_all("td")[5].text
-        if not all(item in artists for item in wanted_artists):
+        if not all(item.lower() in artists_ for item in wanted_artists):
             continue
 
         data["items"].append(
