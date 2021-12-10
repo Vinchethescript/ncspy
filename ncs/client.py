@@ -32,6 +32,9 @@ class Client:
             if item.title == title["title"]:
                 info = item
                 break
+        
+        if info == None:
+            return
 
         req = await self.session.get(
             f"https://ncs.lnk.to/{id}/widget?view=clickthrough"
