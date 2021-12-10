@@ -89,7 +89,7 @@ def parse_song(html, searched=None) -> dict:
         if not ar.lower() in lows:
             lows.append(ar.lower())
             ars.append(ar)
-    print(ars)
+
     searched.update(ret)
     searched["artists"] = ars
     return searched

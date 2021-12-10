@@ -13,6 +13,11 @@ class Client:
         self.session = session or aiohttp.ClientSession(loop=self.loop)
         self.created_session = session is None and close_session
 
+    async def _close_session(self, do=True):
+        if self.created_session and do:
+            await self.session.close()
+            self.session = None
+
     async def get_song(self, id: str, close=True):
         if (self.created_session and close) and self.session == None:
             self.session = aiohttp.ClientSession(loop=self.loop)
@@ -34,6 +39,7 @@ class Client:
                 break
         
         if info == None:
+            await self._close_session(close)
             return
 
         req = await self.session.get(
@@ -46,9 +52,7 @@ class Client:
             None, lambda: parse_song(content, searched=info.data)
         )
 
-        if self.created_session and close:
-            await self.session.close()
-            self.session = None
+        await self._close_session(close)
         return Song(**data)
 
     async def search(
@@ -120,8 +124,6 @@ class Client:
         
             data["items"] = items
 
-        if self.created_session and close:
-            await self.session.close()
-            self.session = None
-
+        
+        await self._close_session(close)
         return SearchResults(**data)
