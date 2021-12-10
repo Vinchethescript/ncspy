@@ -4,7 +4,7 @@ client = ncs.Client()
 
 
 async def main():
-    query = "Don't Bother"  # the song you are looking for
+    query = "a"  # the song you are looking for
     genre = ""  # the song's genre
     mood = ""  # the song's mood
     artists = []  # the song's artists
@@ -14,7 +14,7 @@ async def main():
     )
     print(f'Search results for "{query}":')
     for result in results.items:
-        print(f"{result.name}:")
+        print(f"{result}:")
         print("Artists:", ", ".join(result.artists))
         # time is always at midnight because
         # NCS does not provide time with date

@@ -38,6 +38,9 @@ class Song:
 
     def __repr__(self):
         return f'<{type(self).__name__} title="{self.title}">'
+    
+    def __str__(self):
+        return self.name
 
 
 class SearchResults:

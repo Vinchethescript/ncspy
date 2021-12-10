@@ -23,7 +23,14 @@ class Client:
             self.session = aiohttp.ClientSession(loop=self.loop)
 
         title_req = await self.session.get(f"https://ncs.io/{id}")
-        title_req.raise_for_status()
+        try:
+            title_req.raise_for_status()
+        except aiohttp.ClientResponseError:
+            if title_req.status == 404:
+                await self._close_session(close)
+                return
+
+            raise
 
         title_content = await title_req.content.read()
         title = await self.loop.run_in_executor(None, lambda: get_title(title_content))
@@ -116,7 +123,6 @@ class Client:
         items = []
         if get:
             for item in data["items"]:
-                print(item)
                 items.append((await self.get_song(item["id"], close=False)).data)
         
             data["items"] = items
