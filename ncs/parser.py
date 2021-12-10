@@ -39,8 +39,8 @@ def parse_song(html, searched=None) -> dict:
         if isinstance(node, ast.Assign)
     }
 
-    artwork = fields["artwork"].strip('" ').replace("\\", "")
-    pagetitle = parsed.head.title.text
+    artwork = fields["artwork"].strip('" ').replace("\\", "").strip()
+    pagetitle = parsed.head.title.text.strip()
     comp = re.compile("(\((ft|Ft|feat|Feat)(|\.) .*\))")
 
     fts = comp.findall(pagetitle)
@@ -50,14 +50,15 @@ def parse_song(html, searched=None) -> dict:
         if isinstance(ft, tuple):
             ft = ft[0]
 
-        ft = ft.strip("( )").replace("ft. ", "", 1).split(" & ")
+        ft = ft.strip("( )").replace("ft. ", "", 1).strip().split(" & ")
 
         for ft in ft:
             feats.add(ft)
 
     datas = pagetitle.split(" - ")
-    artists_ = datas[0].strip("( )").replace("ft. ", "", 1).split(" & ")
+    artists_ = datas[0].strip("( )").replace("ft. ", "", 1).strip().split(" & ")
     for artist in artists_:
+        artist = artist.strip()
         if ", " in artist:
             for a in artist.split(", "):
                 artists.add(a)
@@ -70,7 +71,7 @@ def parse_song(html, searched=None) -> dict:
         if isinstance(ft, tuple):
             ft = ft[0]
 
-        datas[1] = datas[1].replace(ft, "").strip()
+        datas[1] = datas[1].strip().replace(ft, "").strip()
 
     if len(datas) == 1:
         title = datas[0]
@@ -78,7 +79,7 @@ def parse_song(html, searched=None) -> dict:
     else:
         title = datas[1]
 
-    ret = {"title": title, "artists": artists, "artwork": artwork}
+    ret = {"title": title.strip(), "artists": artists, "artwork": artwork.strip()}
     if not searched:
         return ret
 
@@ -86,6 +87,7 @@ def parse_song(html, searched=None) -> dict:
     lows = []
     ars = []
     for ar in ars_:
+        ar = ar.strip()
         if not ar.lower() in lows:
             lows.append(ar.lower())
             ars.append(ar)
@@ -109,18 +111,18 @@ def parse_search_results(html, wanted_artists=[]) -> dict:
 
         datas = res.find_all("td")[3]
         id = datas.a["href"].strip("/")
-        title = datas.a.p.text
-        artists = datas.span.text.split(", ")
-        artists_ = datas.span.text.lower().split(", ")
+        title = datas.a.p.text.strip()
+        artists = datas.span.text.strip().split(", ")
+        artists_ = datas.span.text.lower().strip().split(", ")
         versions = res.find_all("td")[6].text.lower().split(", ")
-        date = res.find_all("td")[5].text
+        date = res.find_all("td")[5].text.strip()
         if not all(item.lower() in artists_ for item in wanted_artists):
             continue
 
         data["items"].append(
             {
-                "id": id,
-                "title": title,
+                "id": id.strip(),
+                "title": title.strip(),
                 "artists": artists,
                 "versions": versions,
                 "release_date": date,

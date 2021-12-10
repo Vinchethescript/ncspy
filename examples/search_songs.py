@@ -4,7 +4,7 @@ client = ncs.Client()
 
 
 async def main():
-    query = "a"  # the song you are looking for
+    query = "Don't Bother"  # the song you are looking for
     genre = ""  # the song's genre
     mood = ""  # the song's mood
     artists = []  # the song's artists

@@ -37,10 +37,6 @@ class Client:
             if item.title == title["title"]:
                 info = item
                 break
-        
-        if info == None:
-            await self._close_session(close)
-            return
 
         req = await self.session.get(
             f"https://ncs.lnk.to/{id}/widget?view=clickthrough"
@@ -120,6 +116,7 @@ class Client:
         items = []
         if get:
             for item in data["items"]:
+                print(item)
                 items.append((await self.get_song(item["id"], close=False)).data)
         
             data["items"] = items
