@@ -71,7 +71,8 @@ def parse_song(html, searched=None) -> dict:
         if isinstance(ft, tuple):
             ft = ft[0]
 
-        datas[1] = datas[1].strip().replace(ft, "").strip()
+        if len(datas) == 2: datas[1] = datas[1].strip().replace(ft, "").strip()
+        elif len(datas) == 1: datas[0] = datas[0].strip().replaced(ft, "").strip()
 
     if len(datas) == 1:
         title = datas[0]
